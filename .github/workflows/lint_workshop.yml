@@ -1,0 +1,50 @@
+# Checks that workshop material can be opened: notebooks are valid, scripts parse.
+# Runs with a read-only token and no secrets, so it is safe for pull requests from forks.
+name: Lint workshop material
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The pull request merge commit and its first parent (the base branch)
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install linter dependencies
+        run: pip install --quiet nbformat pyyaml
+
+      - name: Select files
+        id: select
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "pull_request" ]; then
+            scope="--changed-since HEAD^1"
+          else
+            scope="--all"
+          fi
+          echo "scope=$scope" >> "$GITHUB_OUTPUT"
+          python .github/scripts/lint_workshop.py $scope --print-files | tee files.txt
+          if grep -qiE '\.(r|rmd|qmd)$' files.txt; then
+            echo "needs_r=true" >> "$GITHUB_OUTPUT"
+          fi
+          rm files.txt
+
+      - name: Set up R
+        if: steps.select.outputs.needs_r == 'true'
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Lint
+        run: python .github/scripts/lint_workshop.py ${{ steps.select.outputs.scope }} --github
