@@ -1,8 +1,6 @@
 # Intro to Python (Part 1)
 
-**Workshop Lead: Sameena Karsan**
-
-**Facilitator: James Randolph**
+**Workshop Leads: Anna Zaidi and Cienna Gin-Naccarato**
 
 **Registration link: <https://forms.office.com/r/UwgvBnDrJ4>**
 
@@ -18,7 +16,7 @@
 
 **Summary: (2-3 sentences summarizing the workshop)**
 
-In this 4-hour workshop, participants will be introduced to the basics of programming in Python. Students will journey from the beginnings of creating variables and performing simple mathematical operations to writing code that can perform fundamental tasks and wrapping this code into functions. Participants will learn how to write the important building blocks that make up complex programs.
+In this 2-hour workshop, participants will be introduced to the basics of programming in Python. Students will journey from the beginnings of creating variables and performing simple mathematical operations to writing code that can perform fundamental tasks and wrapping this code into functions. Participants will learn how to write the important building blocks that make up complex programs.
 
 **Learning Objectives: (List 3-5 learning objectives participants will learn upon completion of this workshop)**
 
